@@ -1,4 +1,9 @@
-        if (isset($_POST['subscriber'])) {
+    
+$account_first_name = !empty($_POST['first_name']) ? sanitize_text_field($_POST['first_name']) : '';
+$account_last_name = !empty($_POST['last_name']) ? sanitize_text_field($_POST['last_name']) : '';
+$account_email = !empty($_POST['user_email']) ? sanitize_text_field($_POST['user_email']) : '';        
+
+if (isset($_POST['subscriber'])) {
             update_user_meta($user->ID, 'mailpoet_subscriber', intval($_POST['subscriber']));
             $user_data = array(
                 'email' => $account_email,
