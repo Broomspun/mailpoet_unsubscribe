@@ -28,20 +28,19 @@ if (isset($_POST['subscriber'])) { //checkbox
 
             $helper_user = WYSIJA::get('user','helper');
             $sub_user_id = $helper_user->addSubscriber($data_subscriber);
-            update_user_meta($user->ID,'user_subcriber_id',$sub_user_id);
-
+           
             wp_update_user($user);
         }else {
-            delete_user_meta($user->ID, 'mailpoet_subscriber');
-
+           
             $helper_user = WYSIJA::get('user','helper');
 
-            $sub_user_id = get_user_meta($user->ID, 'user_subcriber_id', true);
+           $model_user = WYSIJA::get('user', 'model');
+           $sub_user_id =  $model_user->user_id($current_user->user_email);
 
             if(!empty($sub_user_id)) {
                 $retuen_user = $helper_user->unsubscribe($sub_user_id, false);
-                if ($helper_user->delete($sub_user_id)) {
-                    delete_user_meta($user->ID, 'user_subcriber_id');
-                };
+                $helper_user->delete($sub_user_id);
+                  
+                
             }
         }
